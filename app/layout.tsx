@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Nav from "@/components/base/nav";
+import Footer from "@/components/base/footer";
 
 export const metadata: Metadata = {
   title: "Songs for the Road",
@@ -13,7 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex flex-col h-screen">
+        <Nav />
+        <main className="flex-grow flex items-center justify-center">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }
