@@ -38,20 +38,20 @@ export default function Nav() {
   };
 
   return (
-    <nav className="w-full flex items-center justify-between p-8 font-mono text-sm">
+    <nav className="w-full flex items-center justify-between p-8 font-mono text-xs">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger className="p-2 hover:bg-[#D96466] text-white rounded-lg">
           ADD A MEMORY
         </DialogTrigger>
 
         <DialogContent className="bg-[#1B1B1B] p-8 shadow-xl">
-          <DialogHeader className="text-center text-white text-sm">
+          <DialogHeader className="text-center text-white text-xs">
             <DialogTitle>NEW MEMORY</DialogTitle>
           </DialogHeader>
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-6 mt-6 text-white"
+            className="flex flex-col gap-6 mt-6 text-xs text-white"
           >
             <LocationInput
               value={formData.location}
@@ -67,7 +67,7 @@ export default function Nav() {
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, song: e.target.value }))
               }
-              className="bg-[#303030] placeholder:text-[#686868] text-xs rounded-lg p-2"
+              className="bg-[#303030] placeholder:text-[#686868] rounded-lg p-2"
             />
 
             <div className="flex gap-2">
@@ -80,7 +80,7 @@ export default function Nav() {
                     startDate: e.target.value,
                   }))
                 }
-                className="bg-[#303030] text-white text-xs rounded-lg p-2 flex-1"
+                className="bg-[#303030] text-white rounded-lg p-2 flex-1"
               />
               <input
                 type="date"
@@ -88,7 +88,7 @@ export default function Nav() {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, endDate: e.target.value }))
                 }
-                className="bg-[#303030] text-white text-xs rounded-lg p-2 flex-1"
+                className="bg-[#303030] text-white rounded-lg p-2 flex-1"
               />
             </div>
 
@@ -98,7 +98,7 @@ export default function Nav() {
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, notes: e.target.value }))
               }
-              className="bg-[#303030] placeholder:text-[#686868] text-xs rounded-lg p-2"
+              className="bg-[#303030] placeholder:text-[#686868] rounded-lg p-2"
             />
 
             <button

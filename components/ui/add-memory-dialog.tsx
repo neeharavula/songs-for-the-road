@@ -156,7 +156,7 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
     <button
       onClick={context.handleTrigger}
       className={cn(
-        "inline-flex items-center justify-center rounded-lg text-sm font-medium",
+        "inline-flex items-center justify-center rounded-lg text-xs",
         "transition-colors focus-visible:ring-2 focus-visible:outline-hidden",
         "focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         className
@@ -271,10 +271,7 @@ function DialogTitle({ children, className }: DialogTitleProps) {
   if (!context) throw new Error("DialogTitle must be used within Dialog");
 
   return (
-    <h2
-      id={context.ids.title}
-      className={cn("text-base font-medium", className)}
-    >
+    <h2 id={context.ids.title} className={cn("text-base text-xs", className)}>
       {children}
     </h2>
   );
