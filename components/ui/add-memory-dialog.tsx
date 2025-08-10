@@ -156,7 +156,7 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
     <button
       onClick={context.handleTrigger}
       className={cn(
-        "inline-flex items-center justify-center rounded-md text-sm font-medium",
+        "inline-flex items-center justify-center rounded-lg text-sm font-medium",
         "transition-colors focus-visible:ring-2 focus-visible:outline-hidden",
         "focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         className
@@ -235,7 +235,7 @@ function DialogContent({ children, className, container }: DialogContentProps) {
           transition={transition}
           onAnimationComplete={onAnimationComplete}
           className={cn(
-            "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-lg",
+            "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-2xl",
             "backdrop:bg-black/50 backdrop:backdrop-blur-xs",
             "open:flex open:flex-col",
             className
