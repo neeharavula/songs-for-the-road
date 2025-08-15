@@ -18,16 +18,16 @@ export default function Nav() {
   type FormData = {
     location: LocationValue | null;
     song: SimpleTrack | null;
-    startDate: string;
-    endDate: string;
+    month: string;
+    year: string;
     notes: string;
   };
 
   const initialForm: FormData = {
     location: null,
     song: null,
-    startDate: "",
-    endDate: "",
+    month: "",
+    year: "",
     notes: "",
   };
 
@@ -50,8 +50,8 @@ export default function Nav() {
       trackName: formData.song?.name,
       trackArtists: formData.song?.artists,
       trackImage: formData.song?.image,
-      startDate: formData.startDate || null,
-      endDate: formData.endDate || null,
+      month: formData.month || null,
+      year: formData.year || null,
       notes: formData.notes || "",
     };
 
@@ -92,23 +92,25 @@ export default function Nav() {
 
             <div className="flex gap-2">
               <input
-                type="date"
-                value={formData.startDate}
+                type="text"
+                placeholder="Month"
+                value={formData.month}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    startDate: e.target.value,
+                    month: e.target.value,
                   }))
                 }
-                className="bg-[#303030] text-white rounded-lg p-2 flex-1"
+                className="bg-[#303030] text-white placeholder:text-[#686868] rounded-lg p-2 flex-1"
               />
               <input
-                type="date"
-                value={formData.endDate}
+                type="text"
+                placeholder="Year"
+                value={formData.year}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, endDate: e.target.value }))
+                  setFormData((prev) => ({ ...prev, year: e.target.value }))
                 }
-                className="bg-[#303030] text-white rounded-lg p-2 flex-1"
+                className="bg-[#303030] text-white placeholder:text-[#686868] rounded-lg p-2 flex-1"
               />
             </div>
 
