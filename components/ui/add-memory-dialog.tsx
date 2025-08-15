@@ -5,7 +5,6 @@ import { useId } from "react";
 import { createPortal } from "react-dom";
 import { usePreventScroll } from "@/hooks/use-prevent-scroll";
 
-// Simple className merge util
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
 }

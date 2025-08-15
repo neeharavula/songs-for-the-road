@@ -9,13 +9,23 @@ import {
   DialogTitle,
 } from "@/components/ui/add-memory-dialog";
 import LocationInput, { LocationValue } from "@/components/ui/location-input";
+import TrackSearchInput, { type SimpleTrack } from "@/components/ui/track-search-input";
 
 export default function Nav() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const initialForm = {
-    location: null as LocationValue | null,
-    song: "",
+
+  type FormData = {
+    location: LocationValue | null;
+    song: SimpleTrack | null;
+    startDate: string;
+    endDate: string;
+    notes: string;
+  };
+
+  const initialForm: FormData = {
+    location: null,
+    song: null,
     startDate: "",
     endDate: "",
     notes: "",
@@ -32,10 +42,24 @@ export default function Nav() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submit form", formData);
-    // TODO: save to backend here
+
+    const payload = {
+      location: formData.location,        // your chosen shape
+      trackId: formData.song?.id,
+      trackUri: formData.song?.uri,
+      trackName: formData.song?.name,
+      trackArtists: formData.song?.artists,
+      trackImage: formData.song?.image,
+      startDate: formData.startDate || null,
+      endDate: formData.endDate || null,
+      notes: formData.notes || "",
+    };
+
+    console.log("Submit form", payload);
+    // TODO: POST to your backend and save
     setIsDialogOpen(false);
   };
+
 
   return (
     <nav className="w-full flex items-center justify-between p-8 font-mono text-xs">
@@ -60,15 +84,11 @@ export default function Nav() {
               }
             />
 
-            <input
-              type="text"
-              placeholder="What did you hear?"
-              value={formData.song}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, song: e.target.value }))
-              }
-              className="bg-[#303030] placeholder:text-[#686868] rounded-lg p-2"
-            />
+             <TrackSearchInput
+                value={formData.song}
+                onChange={(track) => setFormData((prev) => ({ ...prev, song: track }))}
+                className=""
+              />
 
             <div className="flex gap-2">
               <input
@@ -104,7 +124,7 @@ export default function Nav() {
             <button
               type="submit"
               className="px-4 py-2 bg-[#D96466] text-white rounded-lg"
-              disabled={!formData.location}
+              disabled={!formData.location || !formData.song}
             >
               Add to Map
             </button>
