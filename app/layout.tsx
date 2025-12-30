@@ -6,6 +6,9 @@ import Footer from "@/components/base/footer";
 export const metadata: Metadata = {
   title: "Songs for the Road",
   description: "Sonical travel diary",
+  icons: {
+    icon: "/public/music-note-pin.png",
+  },
 };
 
 export default function RootLayout({

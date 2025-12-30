@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export function MobileLanding() {
   return (
@@ -9,6 +9,7 @@ export function MobileLanding() {
         </h1>
         <p className="text-[var(--foreground)] font-[var(--font-mono)] text-sm">
           VISIT ON DESKTOP TO ADD MEMORIES
+          <span className="text-[#D96466]"> ♫</span>
         </p>
       </div>
     </div>
