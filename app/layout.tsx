@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Songs for the Road",
   description: "Sonical travel diary",
   icons: {
-    icon: "/public/music-note-pin.png",
+    icon: "/music-note-pin.png",
   },
 };
 
