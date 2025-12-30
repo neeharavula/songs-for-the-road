@@ -9,11 +9,12 @@ import {
   DialogTitle,
 } from "@/components/ui/add-memory-dialog";
 import LocationInput, { LocationValue } from "@/components/ui/location-input";
-import TrackSearchInput, { type SimpleTrack } from "@/components/ui/track-search-input";
+import TrackSearchInput, {
+  type SimpleTrack,
+} from "@/components/ui/track-search-input";
 
 export default function Nav() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
 
   type FormData = {
     location: LocationValue | null;
@@ -40,26 +41,53 @@ export default function Nav() {
     }
   }, [isDialogOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Prepare the data for the API
     const payload = {
-      location: formData.location,        // your chosen shape
-      trackId: formData.song?.id,
-      trackUri: formData.song?.uri,
-      trackName: formData.song?.name,
-      trackArtists: formData.song?.artists,
-      trackImage: formData.song?.image,
-      month: formData.month || null,
-      year: formData.year || null,
-      notes: formData.notes || "",
+      location_name: formData.location?.name || "",
+      latitude: formData.location?.coordinates[1] || 0,
+      longitude: formData.location?.coordinates[0] || 0,
+      track_name: formData.song?.name || "",
+      track_artist: formData.song?.artists || "",
+      track_album: formData.song?.album || null,
+      track_image_url: formData.song?.image || null,
+      track_preview_url: formData.song?.previewUrl || null,
+      spotify_track_id: formData.song?.id || null,
+      memory_month: formData.month ? parseInt(formData.month) : null,
+      memory_year: formData.year ? parseInt(formData.year) : null,
+      notes: formData.notes || null,
     };
 
-    console.log("Submit form", payload);
-    // TODO: POST to your backend and save
-    setIsDialogOpen(false);
-  };
+    try {
+      // Send the data to our API
+      const response = await fetch("/api/memories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Failed to save memory:", result.error);
+        alert("Failed to save memory. Please try again.");
+        return;
+      }
+
+      console.log("Memory saved successfully:", result.memory);
+      setIsDialogOpen(false);
+
+      // Trigger map refresh
+      window.dispatchEvent(new Event('refreshMemories'));
+    } catch (error) {
+      console.error("Error saving memory:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <nav className="w-full flex items-center justify-between p-8 font-mono text-xs">
@@ -84,11 +112,13 @@ export default function Nav() {
               }
             />
 
-             <TrackSearchInput
-                value={formData.song}
-                onChange={(track) => setFormData((prev) => ({ ...prev, song: track }))}
-                className=""
-              />
+            <TrackSearchInput
+              value={formData.song}
+              onChange={(track) =>
+                setFormData((prev) => ({ ...prev, song: track }))
+              }
+              className=""
+            />
 
             <div className="flex gap-2">
               <input
