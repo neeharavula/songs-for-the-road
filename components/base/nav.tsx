@@ -81,7 +81,8 @@ export default function Nav() {
       console.log("Memory saved successfully:", result.memory);
       setIsDialogOpen(false);
 
-      // TODO: Refresh the map to show the new pin
+      // Trigger map refresh
+      window.dispatchEvent(new Event('refreshMemories'));
     } catch (error) {
       console.error("Error saving memory:", error);
       alert("An error occurred. Please try again.");

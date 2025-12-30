@@ -12,25 +12,32 @@ export default function Map() {
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const [memories, setMemories] = useState<Memory[]>([]);
 
-  // Fetch memories from the API
-  useEffect(() => {
-    async function fetchMemories() {
-      try {
-        const response = await fetch("/api/memories");
-        const data = await response.json();
-        if (data.memories) {
-          setMemories(data.memories);
-        }
-      } catch (error) {
-        console.error("Error fetching memories:", error);
+  // Function to fetch memories
+  const fetchMemories = async () => {
+    try {
+      const response = await fetch("/api/memories");
+      const data = await response.json();
+      if (data.memories) {
+        setMemories(data.memories);
       }
+    } catch (error) {
+      console.error("Error fetching memories:", error);
     }
+  };
 
+  // Fetch memories from the API once on mount
+  useEffect(() => {
     fetchMemories();
+  }, []);
 
-    // Poll for new memories every 5 seconds
-    const interval = setInterval(fetchMemories, 5000);
-    return () => clearInterval(interval);
+  // Listen for custom event to refresh memories
+  useEffect(() => {
+    const handleRefresh = () => {
+      fetchMemories();
+    };
+
+    window.addEventListener('refreshMemories', handleRefresh);
+    return () => window.removeEventListener('refreshMemories', handleRefresh);
   }, []);
 
   // Initialize the map
